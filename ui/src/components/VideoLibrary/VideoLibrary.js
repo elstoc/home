@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import './VideoLibrary.css';
 import VideoAdd from './VideoAdd';
 import VideoFilter from './VideoFilter';
 import ImdbSearch from './ImdbSearch';
 import VideoList from './VideoList';
-import useGQLQuery from '../../hooks/useGQLQuery';
+import { APIContext } from '../../hooks/APIClient';
 
 const VideoLibrary = () => {
   //set function not yet used
   //eslint-disable-next-line
   const [imdbSearchShown, setimdbSearchShown] = useState(false);
+  const useGQLQuery = useContext(APIContext);
   const { data, isLoading, error } = useGQLQuery('videolist');
 
   let videoList = [];

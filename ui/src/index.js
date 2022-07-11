@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { APIContext, useGQLQuery } from './hooks/APIClient';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -14,11 +15,13 @@ const queryClient = new QueryClient({
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <QueryClientProvider client={queryClient}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </QueryClientProvider>
+  <React.StrictMode>
+    <APIContext.Provider value={useGQLQuery}>
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
+    </APIContext.Provider>
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
