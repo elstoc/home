@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import VideoLibrary from './VideoLibrary';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { useGQLQuery } from '../../hooks/mockAPIClient';
+import { useGQLQuery, useGQLQueryThrow } from '../../hooks/mockAPIClient';
 import { APIContext } from '../../hooks/APIClient';
 
 const queryClient = new QueryClient();
@@ -68,6 +68,31 @@ describe("that the VideoLibrary Component", () => {
     //here mocking allows me to just test that the correct data is passed
     //since I haven't built the VideoList component yet
     const element = await screen.findByText(/VideoListComponent.*2,3,4/, {}, {timeout:2000});
+    expect(element).toBeInTheDocument();
+  });
+
+});
+
+describe("that the VideoLibrary Component", () => {
+
+  it('shows an error when the API errors', async () => {
+    VideoAdd.mockImplementation(() => <p>VideoAddComponent</p>);
+    VideoFilter.mockImplementation(() => <p>VideoFilterComponent</p>);
+    ImdbSearch.mockImplementation(() => <p>ImdbSearchComponent</p>);
+    VideoList.mockImplementation((props) => {
+      return (
+        <p>VideoListComponent {JSON.stringify(props.videos)}</p>
+      );
+    });
+    render(
+      <APIContext.Provider value={useGQLQueryThrow}>
+        <QueryClientProvider client={queryClient}>
+          <VideoLibrary />
+        </QueryClientProvider>
+      </APIContext.Provider>
+    );
+    jest.spyOn(console, 'error').mockImplementation(() => {}); //don't show the error on the console
+    const element = await screen.findByText(/Error\.\.\./, {}, { timeout: 2000 });
     expect(element).toBeInTheDocument();
   });
 
