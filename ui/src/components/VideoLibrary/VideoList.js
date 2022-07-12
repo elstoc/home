@@ -9,13 +9,13 @@ const VideoList = ({ videos }) => {
         No Videos Found
       </div>
     )
-  }
+  };
 
   return (
     <div className='videolib-group'>
-      {videos.map((video) => <Video key={video.id} video={video} />) }
+      {videos.map((video) => <Video key={video.id} video={video} />)}
     </div>
-  )
+  );
 };
 
 export default VideoList;
