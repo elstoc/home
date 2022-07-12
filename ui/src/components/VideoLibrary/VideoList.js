@@ -13,7 +13,7 @@ const VideoList = ({ videos }) => {
 
   return (
     <div className='videolib-group'>
-      { videos.map(() => <Video key={Math.random()} />) }
+      {videos.map((video) => <Video key={video.id} video={video} />) }
     </div>
   )
 };

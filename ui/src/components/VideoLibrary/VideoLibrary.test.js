@@ -9,12 +9,10 @@ const queryClient = new QueryClient();
 import VideoAdd from './VideoAdd';
 import VideoFilter from './VideoFilter';
 import ImdbSearch from './ImdbSearch';
-import VideoList from './VideoList';
 
 jest.mock('./VideoAdd');
 jest.mock('./VideoFilter');
 jest.mock('./ImdbSearch');
-jest.mock('./VideoList');
 
 describe("that the VideoLibrary Component", () => {
 
@@ -25,11 +23,6 @@ describe("that the VideoLibrary Component", () => {
     VideoAdd.mockImplementation(() => <p>VideoAddComponent</p>);
     VideoFilter.mockImplementation(() => <p>VideoFilterComponent</p>);
     ImdbSearch.mockImplementation(() => <p>ImdbSearchComponent</p>);
-    VideoList.mockImplementation((props) => {
-      return (
-        <p>VideoListComponent {JSON.stringify(props.videos)}</p>
-      );
-    });
     render(
       <APIContext.Provider value={useGQLQuery}>
         <QueryClientProvider client={queryClient}>
@@ -64,10 +57,16 @@ describe("that the VideoLibrary Component", () => {
     expect(element).toBeInTheDocument();
   });
 
-  it('renders the VideoList component (eventually) with input props data', async () => {
+  it('renders each of the test videos (eventually)', async () => {
     //here mocking allows me to just test that the correct data is passed
     //since I haven't built the VideoList component yet
-    const element = await screen.findByText(/VideoListComponent.*2,3,4/, {}, {timeout:2000});
+    let element = await screen.findByText(/2001/, {}, {timeout:2000});
+    expect(element).toBeInTheDocument();
+    element = await screen.findByText(/Amelie/, {}, {timeout:2000});
+    expect(element).toBeInTheDocument();
+    element = await screen.findByText(/American Gods/, {}, {timeout:2000});
+    expect(element).toBeInTheDocument();
+    element = await screen.findByText(/Book Thief/, {}, {timeout:2000});
     expect(element).toBeInTheDocument();
   });
 
@@ -79,11 +78,6 @@ describe("that the VideoLibrary Component", () => {
     VideoAdd.mockImplementation(() => <p>VideoAddComponent</p>);
     VideoFilter.mockImplementation(() => <p>VideoFilterComponent</p>);
     ImdbSearch.mockImplementation(() => <p>ImdbSearchComponent</p>);
-    VideoList.mockImplementation((props) => {
-      return (
-        <p>VideoListComponent {JSON.stringify(props.videos)}</p>
-      );
-    });
     render(
       <APIContext.Provider value={useGQLQueryThrow}>
         <QueryClientProvider client={queryClient}>
