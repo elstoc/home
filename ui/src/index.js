@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { APIContext, useGQLQuery } from './hooks/APIClient';
+import { APIContext } from './hooks/APIClient';
+import { useGQLQuery } from './hooks/mockAPIClient';
 
 const queryClient = new QueryClient({
   defaultOptions: {
