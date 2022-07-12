@@ -3,7 +3,7 @@ import Video from './Video';
 
 const VideoList = ({ videos }) => {
 
-  if (videos && videos.length === 0) {
+  if (!videos || videos.length === 0) {
     return (
       <div className='videolib-group'>
         No Videos Found
