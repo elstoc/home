@@ -17,7 +17,7 @@ describe("that the VideoList Component", () => {
   });
 
   it('does not return "no videos found" when passed a 3-element props array', () => {
-    render(<VideoList videos={[1,2,3]} />);
+    render(<VideoList videos={[{ id: 1 }, { id: 2 }, { id: 3 }]} />);
     const element = screen.queryByText('No Videos Found');
     expect(element).toBeNull();
   });
@@ -29,7 +29,7 @@ describe("that the VideoList Component", () => {
   });
 
   it('returns 3 Videos when passed a 3-element props array', () => {
-    render(<VideoList videos={[1,2,3]} />);
+    render(<VideoList videos={[{ id: 1 }, { id: 2 }, { id: 3 }]} />);
     const elements = screen.getAllByText('VideoComponent');
     expect(elements).toHaveLength(3);
   });
